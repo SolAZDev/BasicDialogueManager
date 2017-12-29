@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using UnityEngine.Timeline;
+//using UnityEngine.Playables;
 
 /* Dialogue Scene Manager v0.2b
  * 		By SolAZDev
@@ -56,19 +58,25 @@ using UnityEngine.UI;
 
 
 public class CutSceneManager : MonoBehaviour {
+	[Header("Scene Details")]
 	public DialogueFile file;
 	public string SceneID;
+	public AudioSource Voices;
+	public AudioSource Sounds;
+	public AudioSource BGMPlayer;
 	public Animator[] Actors;
+
+	[Space]
+	[Header("UI Settings")]
 	public Text TextBox;
 	public Button TBBtn;
 	public Button YesBtn;
 	public Button NoBtn;
 	public Text YesBtnText;
 	public Text NoBtnText;
-	public AudioSource Voices;
-	public AudioSource Sounds;
 
-	public string Line;
+
+	string Line;
 	DialogueManager manager;
 	Dialogue ActiveLine;
 	Dialogue.Choice ActiveChoice;
@@ -154,11 +162,44 @@ public class CutSceneManager : MonoBehaviour {
 				}
 			}
 
+			//Moving an Actor
+			if(arguements[i].Contains("m_")){
+				argArgs = arguements [i].Remove (0, 2).Split (argsplit);
+				if(Actors.Length>int.Parse(argArgs[0])){
+					Vector3.Lerp (
+						Actors [int.Parse(argArgs[0])].transform.position,
+						new Vector3 (
+							(argArgs[1]!="N")?float.Parse(argArgs[1]):Actors[0].transform.position.x,
+							(argArgs[2]!="N")?float.Parse(argArgs[1]):Actors[0].transform.position.y,
+							(argArgs[3]!="N")?float.Parse(argArgs[1]):Actors[0].transform.position.z
+						),
+						Time.deltaTime * ((argArgs.Length > 3) ? float.Parse (argArgs [4]) : 8f)
+					);
+				}
+
+			}
+
+			//Rotate an Actor
+			if(arguements[i].Contains("r_")){
+				argArgs = arguements [i].Remove (0, 2).Split (argsplit);
+				if(Actors.Length>int.Parse(argArgs[0])){
+					Actors[int.Parse(argArgs[0])].transform.Rotate(
+						new Vector3(
+							(argArgs[1]!="N")?float.Parse(argArgs[1]):Actors[0].transform.rotation.eulerAngles.x,
+							(argArgs[2]!="N")?float.Parse(argArgs[1]):Actors[0].transform.rotation.eulerAngles.y,
+							(argArgs[3]!="N")?float.Parse(argArgs[1]):Actors[0].transform.rotation.eulerAngles.z
+						) * (Time.deltaTime * ((argArgs.Length > 3) ? float.Parse (argArgs [4]) : 8f))
+					);
+				}
+
+			}
+
 			//UNIMPLEMENTED BUT STILl CODED
 
 			//Sounds
 			if(arguements[i].Contains("s_")){
 				argArgs = arguements [i].Remove (0, 2).Split (argsplit);
+				//if()
 				Sounds.clip = Resources.Load ("Audio/Sounds/" + argArgs [0]) as AudioClip;
 				if (argArgs.Length > 1) { Sounds.volume		 = float.Parse (argArgs [1]);   }else { Sounds.volume = 1;	}
 				if (argArgs.Length > 2) { Sounds.pitch 		 = float.Parse (argArgs [2]);   }else { Sounds.pitch = 1;	}
@@ -172,6 +213,15 @@ public class CutSceneManager : MonoBehaviour {
 				Voices.clip = Resources.Load ("Audio/Voices/" + ActiveChoice.speaker + "/" + argArgs [0]) as AudioClip;
 				Sounds.Play ();
 			}
+
+			//Songs
+			if(arguements[i].Contains("bgm_")){
+				argArgs = arguements [i].Remove (0, 4).Split (argsplit);
+				BGMPlayer.Stop ();
+				BGMPlayer.clip = Resources.Load ("Audio/Voices/" + ActiveChoice.speaker + "/" + argArgs [0]) as AudioClip;
+				BGMPlayer.Play ();
+			}
+
 
 
 		}

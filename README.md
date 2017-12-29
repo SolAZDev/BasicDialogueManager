@@ -11,9 +11,11 @@ This can be used to compare values or virtually anything else. The script uses
 this variable as an array of arguments, processing them in order. So each node
 can play sounds, and  as many animations as desired, as of this writing.
 
-For animation : a_(actor ID in the array)_(trigger/bool true/bool false/disable/enable)_(animator variable name)
-For Sounds :    s_(clip name)(_(volume)_(pitch)_(stereo panning)) (everything besides the clip name is optional)
-For Voices :    v_(clip name) (It uses the speaker's name to look for the audio clip)
+For animation :    a_(actor ID in the array)_(trigger/bool true/bool false/disable/enable)_(animator variable name)
+For Sounds    :    s_(clip name)(_(volume)_(pitch)_(stereo panning)) (everything besides the clip name is optional)
+For Voices    :    v_(clip name) (It uses the speaker's name to look for the audio clip)
+For Moving    :    m_(actor ID in array)_(X/N)_(Y/N)_(Z/N) (use N to leave an axis as is)
+For Rotation  :    r_(actor ID in array)_(X/N)_(Y/N)_(Z/N) (same as movement)
 
 Note that this uses Resource.Load(path+name) to load any files.
 
