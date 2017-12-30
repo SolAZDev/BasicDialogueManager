@@ -54,7 +54,7 @@ fadein
 fadeout
 flash
 
-
+```
 
 Note that this uses Resource.Load(path+name) to load any files.
 
