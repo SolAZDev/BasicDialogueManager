@@ -1,3 +1,8 @@
+# MOVED
+This project has been merged into [NeoEasyDialogue](https://github.com/SolAZDev/NeoEasyDialogue) as the sample CutSceneManager. This was done to not only because NeoEasyDialogue is slowly growing into a more flexible tool which **has changed some of the original EasyDialogue's ways** making the original not exactly the best option, but this was also done  to provide a working tool that can be expanded upon.
+
+If NeoEasyDialogue is for some reason taken down (example; by request of the original author) commits will be published here, but it'd fall back to the old variables and the added features (like JSON export and import) would either reworked orremoved.
+
 # BasicDialogueManager
 Yet Another Open Source Dialogue Manager, depends on [EasyDialogue](http://u3d.as/2NH).
 This expands on the capabilities of said project, originally to create Persona Q-esque
